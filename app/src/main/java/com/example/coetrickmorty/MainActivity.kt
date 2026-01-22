@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             CoetRickMortyTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Rick y Morty",
+                        name = "Coet de la Nasa utilitzant una API de Rick y Morty",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

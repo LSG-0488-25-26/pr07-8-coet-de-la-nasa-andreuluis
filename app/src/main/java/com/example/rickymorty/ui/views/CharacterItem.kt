@@ -1,5 +1,6 @@
 package com.example.rickymorty.ui.views
 
+import coil.compose.AsyncImage
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -43,14 +44,15 @@ fun CharacterItem(character: Character, navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Image(
-                painter = painterResource(id = character.imageRes),
+            AsyncImage(
+                model = character.imageUrl,
                 contentDescription = character.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(100.dp)
                     .fillMaxWidth(0.4f)
             )
+
             Column {
                 Text(
                     text = character.name,

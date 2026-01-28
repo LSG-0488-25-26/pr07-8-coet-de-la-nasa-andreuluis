@@ -7,5 +7,5 @@ data class Character(
     val species: String,
     val gender: String,
     val origin: String,
-    val imageRes: Int
+    val imageUrl: String
 )

@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.coetrickmorty"
+    namespace = "com.example.rickymorty"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.coetrickmorty"
+        applicationId = "com.example.rockymorty"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.compose.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,4 +59,10 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.androidx.navigation.compose)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("io.coil-kt:coil-compose:2.7.0")
 }

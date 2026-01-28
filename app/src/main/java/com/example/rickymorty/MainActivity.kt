@@ -1,4 +1,4 @@
-package com.example.coetrickmorty
+package com.example.rickymorty
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,37 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.coetrickmorty.ui.theme.CoetRickMortyTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.rickymorty.ui.theme.RickymortyTheme
+import com.example.rickymorty.views.RickAndMortyNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CoetRickMortyTheme {
+            RickymortyTheme {
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Coet de la Nasa utilitzant una API de Rick y Morty",
-                        modifier = Modifier.padding(innerPadding)
+                    RickAndMortyNavHost(
+                        modifier = Modifier.padding(innerPadding),
+                        navController = navController
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CoetRickMortyTheme {
-        Greeting("Android")
     }
 }

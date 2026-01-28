@@ -1,4 +1,4 @@
-package com.example.coetrickmorty.ui.theme
+package com.example.rickymorty.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

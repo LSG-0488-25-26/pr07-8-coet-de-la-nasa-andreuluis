@@ -1,4 +1,4 @@
-package com.example.coetrickmorty.ui.theme
+package com.example.rickymorty.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun CoetRickMortyTheme(
+fun RickymortyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

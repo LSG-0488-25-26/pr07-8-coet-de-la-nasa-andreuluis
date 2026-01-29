@@ -11,11 +11,9 @@ La aplicación se conecta a la **API pública de Rick and Morty** para obtener l
 ##  Funcionalidades Principales
 
 -  Lista de personajes  
--  Detalle de cada personaje  
--  Información de episodios  
--  Información de localizaciones  
+-  Detalle de cada personaje   
 -  Navegación entre pantallas  
--  Carga de imágenes desde Internet  
+-  Carga de imágenes desde Internet con la API
 
 ---
 
@@ -31,15 +29,13 @@ Permite definir las peticiones HTTP (como obtener todos los personajes) como fun
 La API devuelve los datos en formato **JSON**.  
 Gson convierte automáticamente ese JSON en **data class** de Kotlin para poder trabajar con los datos fácilmente.
 
-Este proceso es el núcleo del proyecto, ya que permite obtener datos en tiempo real sin almacenarlos dentro de la app.
-
 ---
 
 ##  2. Arquitectura MVVM (Model - View - ViewModel)
 
-El proyecto sigue el patrón **MVVM**, recomendado por Google.
+El proyecto sigue el patrón **MVVM**.
 
-###  View (Vista)
+###  View 
 - Construida con **Jetpack Compose**  
 - Muestra los datos al usuario  
 - Captura las interacciones del usuario  
@@ -47,11 +43,11 @@ El proyecto sigue el patrón **MVVM**, recomendado por Google.
 ###  ViewModel  
 - Solicita los datos al repositorio  
 - Prepara los datos para la vista  
-- Sobrevive a cambios de configuración (rotación de pantalla)  
+- Sobrevive a cambios de configuración
 
 ###  Model  
 - Contiene la lógica de negocio y los datos  
-- Incluye el **Repositorio**, que gestiona la obtención de datos desde la API o una base de datos local en el futuro  
+- Incluye el **Repositorio**, que gestiona la obtención de datos desde la API.
 
 Esta arquitectura hace el código más organizado, fácil de mantener y testear.
 
@@ -69,7 +65,7 @@ Toda la interfaz está creada con **Jetpack Compose**.
 ###  Navegación  
 - Se utiliza **Navigation Compose**  
 - `RickAndMortyNavHost` gestiona las diferentes pantallas  
-- Permite navegar entre lista y detalle de personajes, episodios y localizaciones  
+- Permite navegar entre lista y detalle de personajes.
 
 ###  Imágenes  
 - Se utiliza **Coil** para cargar imágenes desde Internet  
@@ -105,3 +101,4 @@ Toda la interfaz está creada con **Jetpack Compose**.
 ##  Conclusión
 
 En este proyecto se combina una arquitectura robusta (**MVVM**) con herramientas modernas de Androidw para crear una aplicación funcional y bien estructurada que consume datos de una API externa.
+

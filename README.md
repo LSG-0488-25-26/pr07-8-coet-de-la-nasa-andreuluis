@@ -1,88 +1,93 @@
-# 🧪 Rick and Morty 🧪
+# 🧪 Rick and Morty App 🧪
 
-##  Descripción del Proyecto
+## Descripción del Proyecto
 
-Este proyecto es una aplicación Android que muestra información de **personajes, episodios y localizaciones** de la serie *Rick and Morty*.
+Este proyecto es una aplicación Android nativa que sirve como una completa enciclopedia de la serie **"Rick and Morty"**.  
+La aplicación consume la API pública de Rick and Morty para mostrar información detallada sobre **personajes**.
 
-La aplicación se conecta a la **API pública de Rick and Morty** para obtener los datos en tiempo real, sin necesidad de guardarlos dentro de la aplicación.
-
----
-
-##  Funcionalidades Principales
-
--  Lista de personajes  
--  Detalle de cada personaje   
--  Navegación entre pantallas  
--  Carga de imágenes desde Internet con la API
+La arquitectura utiliza **MVVM**, y está construida íntegramente con **Jetpack Compose**.  
+Además, incluye funcionalidades avanzadas como **persistencia de datos**, **búsqueda en tiempo real** y una **sección de favoritos**.
 
 ---
 
-##  1. Conexión a la API (Retrofit + Gson)
+## Funcionalidades Principales
 
-Para obtener los datos usamos dos librerías esenciales:
+- **Exploración Completa**  
+  Visualiza listas de personajes.
 
-### - Retrofit  
-Retrofit simplifica la comunicación con la API.  
-Permite definir las peticiones HTTP (como obtener todos los personajes) como funciones de Kotlin.
+- **Detalle Extenso**  
+  Accede a una vista de detalle para cada elemento.
 
-### - Gson  
-La API devuelve los datos en formato **JSON**.  
-Gson convierte automáticamente ese JSON en **data class** de Kotlin para poder trabajar con los datos fácilmente.
+- **Navegación Moderna**  
+  Interfaz intuitiva con una **Bottom Navigation Bar** para cambiar entre las secciones principales.
 
----
+- **Búsqueda Inteligente**  
+  Una barra de búsqueda (**SearchBar**) permite filtrar personajes en tiempo real.
 
-##  2. Arquitectura MVVM (Model - View - ViewModel)
+- **Persistencia de Datos con Room**  
+  La aplicación guarda los datos en una base de datos local, lo que permite:
+  - **Modo Offline**: Acceso a los datos previamente cargados sin conexión a internet.
+  - **Rendimiento Mejorado**: La carga inicial de datos es casi instantánea al obtenerlos desde la base de datos local.
 
-El proyecto sigue el patrón **MVVM**.
+- **Gestión de Favoritos**  
+  Marca tus personajes favoritos y visualízalos en una sección dedicada.
 
-###  View 
-- Construida con **Jetpack Compose**  
-- Muestra los datos al usuario  
-- Captura las interacciones del usuario  
-
-###  ViewModel  
-- Solicita los datos al repositorio  
-- Prepara los datos para la vista  
-- Sobrevive a cambios de configuración
-
-###  Model  
-- Contiene la lógica de negocio y los datos  
-- Incluye el **Repositorio**, que gestiona la obtención de datos desde la API.
-
-Esta arquitectura hace el código más organizado, fácil de mantener y testear.
+- **Carga Eficiente de Imágenes**  
+  Las imágenes se cargan y cachean desde internet usando **Coil**.
 
 ---
 
-##  3. Interfaz de Usuario con Jetpack Compose
+## Arquitectura y Tecnologías Clave
 
-Toda la interfaz está creada con **Jetpack Compose**.
+El proyecto está construido sobre una base sólida y moderna, combinando las siguientes tecnologías y patrones.
 
-###  MainActivity.kt  
-- Punto de entrada de la aplicación  
-- Configura el tema  
-- Inicializa la navegación  
+### 1. Arquitectura MVVM (Model - View - ViewModel)
 
-###  Navegación  
-- Se utiliza **Navigation Compose**  
-- `RickAndMortyNavHost` gestiona las diferentes pantallas  
-- Permite navegar entre lista y detalle de personajes.
+La aplicación se divide en tres capas lógicas para lograr un código limpio, escalable y fácil de testear:
 
-###  Imágenes  
-- Se utiliza **Coil** para cargar imágenes desde Internet  
-- Optimizado para Jetpack Compose  
+#### View (UI con Jetpack Compose)
+- Pantallas declarativas y reactivas (`CharacterListScreen`, `DetailScreen`).
+- Navegación gestionada por **Navigation Compose**, con una **Bottom Navigation Bar** para las secciones principales.
+- Componentes de **Material 3** como `Scaffold`, `SearchBar` y `Card`.
+
+#### ViewModel
+- Actúa como intermediario, preparando los datos para la UI.
+- Utiliza **Corrutinas de Kotlin** y `viewModelScope` para gestionar operaciones asíncronas de forma segura.
+- Expone el estado de la UI mediante **StateFlow**, permitiendo que las vistas reaccionen a los cambios.
+
+#### Model (Capa de Datos)
+- **Repositorio**  
+  Es la única fuente de verdad (**Single Source of Truth**). Centraliza la lógica de datos y decide si obtenerlos desde la base de datos local o desde la red.
+- **Retrofit & Gson**  
+  Comunicación con la API REST. Retrofit ejecuta las peticiones HTTP y Gson convierte las respuestas JSON en objetos de datos (`ApiCharacter`).
+- **Room**  
+  Base de datos local que almacena los datos obtenidos de la API, proporcionando persistencia y soporte offline.
 
 ---
 
-##  Tecnologías Utilizadas
+### 2. Flujo de Datos (Single Source of Truth)
 
-- Kotlin  
-- Jetpack Compose  
-- Retrofit  
-- Gson  
-- Coroutines  
-- MVVM Architecture  
-- Navigation Compose  
-- Coil  
+El repositorio implementa una estrategia de **fuente única de verdad** para garantizar la consistencia de los datos:
+
+1. El **ViewModel** solicita los datos al **Repositorio**.
+2. El **Repositorio** obtiene primero los datos desde **Room**, haciendo que la app se sienta instantánea.
+3. En paralelo, realiza una llamada a la API mediante **Retrofit** para buscar actualizaciones.
+4. Si se reciben datos nuevos, estos se guardan en **Room**, sobrescribiendo los antiguos.
+5. **Room**, al trabajar con `Flow`, notifica automáticamente a la UI de cualquier cambio, manteniendo la pantalla siempre actualizada.
+
+---
+
+## Tecnologías Utilizadas
+
+- **Lenguaje**: Kotlin  
+- **UI Toolkit**: Jetpack Compose  
+- **Arquitectura**: MVVM (Model-View-ViewModel)  
+- **Asincronía**: Coroutines  
+- **Red**: Retrofit & OkHttp  
+- **Parseo JSON**: Gson  
+- **Base de Datos**: Room  
+- **Navegación**: Navigation Compose  
+- **Carga de Imágenes**: Coil  
 
 ---
 
@@ -101,11 +106,8 @@ Toda la interfaz está creada con **Jetpack Compose**.
 ###  Lista de personajes favoritos
 ![4](https://github.com/user-attachments/assets/d1489f8c-d970-4ead-8a25-a146bac9939b)
 
-
 ---
 
-##  Conclusión
+## Conclusión
 
-En este proyecto se combina una arquitectura robusta (**MVVM**) con herramientas modernas de Androidw para crear una aplicación funcional y bien estructurada que consume datos de una API externa.
-
-
+Este proyecto combina una arquitectura sólida (**MVVM**) con las herramientas más actuales del ecosistema Android —**Jetpack Compose, Room, Retrofit y Corrutinas**— para crear una experiencia de usuario fluida, eficiente y funcional incluso sin conexión.

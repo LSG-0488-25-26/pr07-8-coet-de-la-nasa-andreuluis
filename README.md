@@ -89,11 +89,17 @@ Toda la interfaz está creada con **Jetpack Compose**.
 ##  Capturas de Pantalla
 
 
-###  Lista de personajes
-<img width="342" height="762" alt="image" src="https://github.com/user-attachments/assets/e7f447a1-b693-4a71-afd6-e9d601cdb9b2" />
+###  Lista de personajes con búsqueda y botones
+![1](https://github.com/user-attachments/assets/82a3a060-0d0a-4c6b-bbb6-4e5ef9635839)
 
 ###  Detalle del personaje
-<img width="336" height="758" alt="image" src="https://github.com/user-attachments/assets/b4901712-1543-4884-8236-1b7a5a55df71" />
+![3](https://github.com/user-attachments/assets/fa2a8ba5-a3ba-4d1f-97a3-fa2e5e1c3c39)
+
+###  Búsqueda del personaje
+![2](https://github.com/user-attachments/assets/18f93c2f-a770-4ab8-a50f-a0d7ca849b8b)
+
+###  Lista de personajes favoritos
+![4](https://github.com/user-attachments/assets/d1489f8c-d970-4ead-8a25-a146bac9939b)
 
 
 ---
@@ -101,4 +107,5 @@ Toda la interfaz está creada con **Jetpack Compose**.
 ##  Conclusión
 
 En este proyecto se combina una arquitectura robusta (**MVVM**) con herramientas modernas de Androidw para crear una aplicación funcional y bien estructurada que consume datos de una API externa.
+
 

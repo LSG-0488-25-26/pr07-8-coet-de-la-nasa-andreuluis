@@ -13,6 +13,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -44,35 +46,32 @@ fun DetailScreen(
     val character by vm.selected.observeAsState(null)
     val loading by vm.loading.observeAsState(false)
     val error by vm.error.observeAsState(null)
+    val isFavorite by vm.isFavorite.observeAsState(false)
 
     LaunchedEffect(characterId) {
-        if (characterId != -1) vm.loadCharacterById(characterId)
+        if (characterId != -1) {
+            vm.loadCharacterById(characterId)
+            vm.checkIsFavorite(characterId)
+        }
     }
 
     Box(modifier = modifier.fillMaxSize()) {
-
         when {
-            loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+            loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
-            error != null -> {
-                Text(
-                    text = "Error: $error",
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
+            error != null -> Text(
+                text = "Error: $error",
+                modifier = Modifier.align(Alignment.Center),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium
+            )
 
-            character == null -> {
-                Text(
-                    text = "Not found",
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            character == null -> Text(
+                text = "Not found",
+                modifier = Modifier.align(Alignment.Center),
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold
+            )
 
             else -> {
                 val c = character!!
@@ -94,11 +93,7 @@ fun DetailScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    Text(
-                        text = c.name,
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text(text = c.name, fontSize = 32.sp, fontWeight = FontWeight.Bold)
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -114,6 +109,17 @@ fun DetailScreen(
                         }
                     }
 
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    IconButton(onClick = { vm.toggleFavorite(c) }) {
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = "favorite",
+                            tint = if (isFavorite) Color.Red else Color.Gray,
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+
                     Spacer(modifier = Modifier.height(24.dp))
                 }
             }
@@ -121,9 +127,7 @@ fun DetailScreen(
 
         IconButton(
             onClick = { navController.popBackStack() },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(16.dp)
+            modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

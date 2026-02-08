@@ -8,18 +8,20 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.rickymorty.data.local.RickMortyApplication
 import com.example.rickymorty.data.remote.RetrofitClient
 import com.example.rickymorty.data.repository.CharactersRepository
 import com.example.rickymorty.nav.Routes
 import com.example.rickymorty.ui.ViewModel.CharacterVM
 import com.example.rickymorty.ui.ViewModel.CharacterVMFactory
 import com.example.rickymorty.ui.views.DetailScreen
+import com.example.rickymorty.ui.views.FavoritesView
 import com.example.rickymorty.ui.views.ListView
 
 @Composable
 fun RickAndMortyNavHost(modifier: Modifier, navController: NavHostController) {
-
-    val repo = CharactersRepository(RetrofitClient.api)
+    val dao = RickMortyApplication.database.favoriteDao()
+    val repo = CharactersRepository(RetrofitClient.api, dao)
     val vm: CharacterVM = viewModel(factory = CharacterVMFactory(repo))
 
     NavHost(
@@ -28,6 +30,10 @@ fun RickAndMortyNavHost(modifier: Modifier, navController: NavHostController) {
     ) {
         composable(Routes.ListView.route) {
             ListView(modifier, navController, vm)
+        }
+
+        composable(Routes.FavoritesView.route) {
+            FavoritesView(modifier, navController, vm)
         }
 
         composable(

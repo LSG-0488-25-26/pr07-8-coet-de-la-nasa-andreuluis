@@ -4,9 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-data class ApiCharactersResponse(
-    val results: List<ApiCharacter>
-)
+data class ApiCharactersResponse(val results: List<ApiCharacter>)
 
 data class ApiCharacter(
     val id: Int,

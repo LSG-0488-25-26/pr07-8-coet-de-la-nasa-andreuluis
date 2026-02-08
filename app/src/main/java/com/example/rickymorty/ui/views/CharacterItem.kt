@@ -1,8 +1,6 @@
 package com.example.rickymorty.ui.views
 
-import coil.compose.AsyncImage
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,22 +17,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.rickymorty.nav.Routes
 import com.example.rickymorty.ui.model.Character
 
 @Composable
-fun CharacterItem(character: Character, navController: NavController) {
+fun CharacterItem(
+    character: Character,
+    navController: NavController,
+    imageHeight: Int = 100,
+    showExtra: Boolean = false
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                navController.navigate(Routes.DetailsView.createRoute(character.id))
-            },
+            .clickable { navController.navigate(Routes.DetailsView.createRoute(character.id)) },
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, Color.Gray),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -49,20 +50,18 @@ fun CharacterItem(character: Character, navController: NavController) {
                 contentDescription = character.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .height(100.dp)
-                    .fillMaxWidth(0.4f)
+                    .height(imageHeight.dp)
+                    .fillMaxWidth(0.35f)
             )
 
             Column {
-                Text(
-                    text = character.name,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = character.species,
-                    fontSize = 16.sp
-                )
+                Text(text = character.name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                Text(text = character.species, fontSize = 16.sp)
+
+                if (showExtra) {
+                    Text(text = "Status: ${character.status}", fontSize = 14.sp)
+                    Text(text = "Gender: ${character.gender}", fontSize = 14.sp)
+                }
             }
         }
     }

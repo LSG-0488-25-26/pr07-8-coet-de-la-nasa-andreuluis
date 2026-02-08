@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.rickymorty.ui.components.BottomNavigationBar
 import com.example.rickymorty.ui.theme.RickymortyTheme
 import com.example.rickymorty.views.RickAndMortyNavHost
 
@@ -19,13 +20,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             RickymortyTheme {
                 val navController = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+                Scaffold(
+                    bottomBar = {
+                        BottomNavigationBar(navController)
+                    }
+                ) { padding ->
                     RickAndMortyNavHost(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier.padding(padding),
                         navController = navController
                     )
                 }
             }
         }
+
     }
 }

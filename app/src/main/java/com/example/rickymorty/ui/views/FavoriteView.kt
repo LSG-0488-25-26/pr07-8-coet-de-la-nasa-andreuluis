@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -33,9 +34,11 @@ fun FavoritesView(
         vm.loadFavorites()
     }
 
+    val paddedModifier = modifier.padding(top = 16.dp)
+
     if (favorites.isEmpty()) {
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = paddedModifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -46,7 +49,7 @@ fun FavoritesView(
 
     val list = favorites.map { it.toCharacter() }
 
-    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+    BoxWithConstraints(modifier = paddedModifier.fillMaxSize()) {
         val w = maxWidth
         when {
             w < 600.dp -> FavList(list, navController, 16.dp, 100, false)
@@ -69,7 +72,12 @@ private fun FavList(
         contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 8.dp)
     ) {
         items(list) { character ->
-            CharacterItem(character, navController, imageHeight = imageHeight, showExtra = showExtra)
+            CharacterItem(
+                character,
+                navController,
+                imageHeight = imageHeight,
+                showExtra = showExtra
+            )
         }
     }
 }
